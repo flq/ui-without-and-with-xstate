@@ -1,0 +1,56 @@
+:root {
+    --border-color: lightblue;
+    --text-color: darkblue;
+    --corner-radius: 20px;
+    --border-size: 4px;
+}
+
+.container {
+    display: flex;
+    align-items: stretch;
+}
+
+.common {
+    font-size: 10rem;
+    background: white;
+    padding: 0 3rem;
+    margin: 0;
+    color: var(--text-color);
+}
+
+.button {
+    composes: common;
+    border: var(--border-size) solid var(--border-color);
+}
+
+.button:disabled {
+    color: #aaa;
+}
+
+.button:active {
+    background: var(--text-color);
+    color: white;
+}
+
+.button:not(:active):hover {
+    background: cornflowerblue;
+    cursor: pointer;
+}
+
+.buttonLeft {
+    composes: button;
+    border-bottom-left-radius: var(--corner-radius);
+    border-top-left-radius: var(--corner-radius);
+}
+
+.buttonRight {
+    composes: button;
+    border-bottom-right-radius: var(--corner-radius);
+    border-top-right-radius: var(--corner-radius);
+}
+
+.label {
+    composes: common;
+    border-top: var(--border-size) solid var(--border-color);
+    border-bottom: var(--border-size) solid var(--border-color);
+}
