@@ -25,11 +25,25 @@ export function Stepper({
   const [steppingActive, setSteppingActive] = useState(false);
 
   const stepDown = useCallback(
-    (val: number) => onChange(max([lowerBound, val - stepSize])!),
+    (val: number) =>{
+        const nextValue = max([lowerBound, val - stepSize])!;
+        onChange(nextValue)
+        if (nextValue === lowerBound) {
+            // disabled button cannot raise mouse up
+            setMinusActive(false);
+        }
+    },
     [lowerBound, stepSize]
   );
   const stepUp = useCallback(
-    (val: number) => onChange(min([upperBound, val + stepSize])!),
+    (val: number) => {
+        const nextValue = min([upperBound, val + stepSize])!;
+        onChange(nextValue);
+        if (nextValue === upperBound) {
+            // disabled button cannot raise mouse up
+            setPlusActive(false);
+        }
+    },
     [upperBound, stepSize]
   );
 
