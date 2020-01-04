@@ -13,13 +13,13 @@
 .common {
     font-size: 10rem;
     background: white;
-    padding: 0 3rem;
     margin: 0;
     color: var(--text-color);
 }
 
 .button {
     composes: common;
+    padding: 0 3rem;
     border: var(--border-size) solid var(--border-color);
 }
 
@@ -51,6 +51,9 @@
 
 .label {
     composes: common;
+    padding: 0 5rem;
+    min-width: 15rem;
+    text-align: center;
     border-top: var(--border-size) solid var(--border-color);
     border-bottom: var(--border-size) solid var(--border-color);
 }
