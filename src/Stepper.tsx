@@ -4,6 +4,8 @@ import min from "lodash/min";
 import styles from "./Stepper.module.css";
 import { useInterval, useTimeout } from "./lib/useTimers";
 import { useCallback, useState } from "react";
+import { useMachine } from "@xstate/react";
+import {stepperMachine} from "./StepperMachine";
 
 interface StepperProps {
   value: number;
@@ -20,29 +22,30 @@ export function Stepper({
   upperBound,
   onChange
 }: StepperProps) {
+    //const [state, send] = useMachine(stepperMachine, {context: { value, lowerBound, upperBound, stepSize }});
   const [minusActive, setMinusActive] = useState(false);
   const [plusActive, setPlusActive] = useState(false);
   const [steppingActive, setSteppingActive] = useState(false);
 
   const stepDown = useCallback(
-    (val: number) =>{
-        const nextValue = max([lowerBound, val - stepSize])!;
-        onChange(nextValue)
-        if (nextValue === lowerBound) {
-            // disabled button cannot raise mouse up
-            setMinusActive(false);
-        }
+    (val: number) => {
+      const nextValue = max([lowerBound, val - stepSize])!;
+      onChange(nextValue);
+      if (nextValue === lowerBound) {
+        // disabled button cannot raise mouse up
+        setMinusActive(false);
+      }
     },
     [lowerBound, stepSize]
   );
   const stepUp = useCallback(
     (val: number) => {
-        const nextValue = min([upperBound, val + stepSize])!;
-        onChange(nextValue);
-        if (nextValue === upperBound) {
-            // disabled button cannot raise mouse up
-            setPlusActive(false);
-        }
+      const nextValue = min([upperBound, val + stepSize])!;
+      onChange(nextValue);
+      if (nextValue === upperBound) {
+        // disabled button cannot raise mouse up
+        setPlusActive(false);
+      }
     },
     [upperBound, stepSize]
   );
@@ -61,12 +64,12 @@ export function Stepper({
   useInterval(
     () => {
       if (steppingActive) {
-          if (minusActive) {
-              stepDown(value);
-          }
-          if (plusActive) {
-              stepUp(value);
-          }
+        if (minusActive) {
+          stepDown(value);
+        }
+        if (plusActive) {
+          stepUp(value);
+        }
       }
     },
     200,

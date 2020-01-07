@@ -32,6 +32,7 @@
       <e p="node_modules\@typescript-eslint\experimental-utils" t="IncludeRecursive" />
       <e p="node_modules\@typescript-eslint\parser" t="IncludeRecursive" />
       <e p="node_modules\@typescript-eslint\typescript-estree" t="IncludeRecursive" />
+      <e p="node_modules\@xstate\react" t="IncludeRecursive" />
       <e p="node_modules\babel-jest" t="IncludeRecursive" />
       <e p="node_modules\chalk" t="IncludeRecursive" />
       <e p="node_modules\chokidar" t="IncludeRecursive" />
@@ -70,7 +71,9 @@
       <e p="node_modules\react-dom" t="IncludeRecursive" />
       <e p="node_modules\react-scripts" t="IncludeRecursive" />
       <e p="node_modules\realpath-native" t="IncludeRecursive" />
+      <e p="node_modules\rxjs" t="IncludeRecursive" />
       <e p="node_modules\source-map" t="IncludeRecursive" />
+      <e p="node_modules\tslib" t="IncludeRecursive" />
       <e p="node_modules\typescript\lib\lib.d.ts" t="IncludeRecursive" />
       <e p="node_modules\typescript\lib\lib.dom.d.ts" t="IncludeRecursive" />
       <e p="node_modules\typescript\lib\lib.dom.iterable.d.ts" t="IncludeRecursive" />
@@ -125,6 +128,7 @@
       <e p="node_modules\typescript\lib\lib.webworker.importscripts.d.ts" t="IncludeRecursive" />
       <e p="node_modules\upath" t="IncludeRecursive" />
       <e p="node_modules\worker-farm" t="IncludeRecursive" />
+      <e p="node_modules\xstate" t="IncludeRecursive" />
     </e>
     <e p="C:\Users\frank.quednau\.Rider2019.3\config\scratches" t="IncludeRecursive" />
     <e p="C:\Users\frank.quednau\.Rider2019.3\system\extResources" t="IncludeRecursive" />
