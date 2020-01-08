@@ -25,6 +25,28 @@ function understepGuard({ value, lowerBound } : StepperContext) {
     return value > lowerBound;
 }
 
+function createSteppingSubstates(steppingEffect: typeof plusEffect, pulsingGuard: typeof overstepGuard) {
+    return {
+        waiting: {
+            after: {
+                500: { target: "pulsing" }
+            },
+            on: {
+                Stop: { target: "#stepper.idle" }
+            }
+        },
+        pulsing: {
+            entry: steppingEffect,
+            after: {
+                200: [{ target: "pulsing", cond: pulsingGuard }, { target: "#stepper.idle"}]
+            },
+            on: {
+                Stop: { target: "#stepper.idle" }
+            }
+        }
+    }
+}
+
 type StepperEvent = { type: "Plus" } | { type: "Minus" } | { type: "Stop" };
 
 interface StepperSchema {
@@ -47,19 +69,20 @@ interface StepperSchema {
 
 export const stepperMachine = Machine<StepperContext, StepperSchema, StepperEvent>({
     initial: "idle",
+    id: "stepper",
     states: {
         idle: {
             on: {
                 Plus: [
                     {
-                        target: "plus.waiting",
+                        target: "plus",
                         cond: overstepGuard
                     },
                     { target: "idle" }
                 ],
                 Minus: [
                     {
-                        target: "minus.waiting",
+                        target: "minus",
                         cond: understepGuard
                     },
                     { target: "idle" }
@@ -68,47 +91,13 @@ export const stepperMachine = Machine<StepperContext, StepperSchema, StepperEven
         },
         plus: {
             entry: plusEffect,
-            states: {
-                waiting: {
-                    after: {
-                        500: { target: "plus.pulsing" }
-                    },
-                    on: {
-                        Stop: { target: "idle" }
-                    }
-                },
-                pulsing: {
-                    entry: plusEffect,
-                    after: {
-                        200: [{ target: "plus.pulsing", cond: overstepGuard }, { target: "idle"}]
-                    },
-                    on: {
-                        Stop: { target: "idle" }
-                    }
-                }
-            }
+            initial: "waiting",
+            states: createSteppingSubstates(plusEffect, overstepGuard)
         },
         minus: {
             entry: minusEffect,
-            states: {
-                waiting: {
-                    after: {
-                        500: [{ target: "minus.pulsing", cond: understepGuard }, { target: "idle"}]
-                    },
-                    on: {
-                        Stop: { target: "idle" }
-                    }
-                },
-                pulsing: {
-                    entry: minusEffect,
-                    after: {
-                        200: { target: "minus.pulsing" }
-                    },
-                    on: {
-                        Stop: { target: "idle" }
-                    }
-                }
-            }
+            initial: "waiting",
+            states: createSteppingSubstates(minusEffect, understepGuard)
         }
     }
 });
