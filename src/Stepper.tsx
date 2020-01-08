@@ -2,7 +2,6 @@ import * as React from "react";
 import styles from "./Stepper.module.css";
 import { useMachine } from "@xstate/react";
 import { stepperMachine } from "./StepperMachine";
-import {matchesState} from "xstate";
 
 interface StepperProps {
   value: number;
@@ -19,10 +18,20 @@ export function Stepper({
   upperBound,
   onChange
 }: StepperProps) {
-    
-  const [{context: {value: theValue}, matches}, send] = useMachine(stepperMachine, {
-    context: { value, lowerBound, upperBound, stepSize }
+  const [state, send] = useMachine(stepperMachine, {
+    context: { value, lowerBound, upperBound, stepSize },
+    actions: {
+      notifyExternal: ctx => onChange(ctx.value)
+    },
+    delays: {
+      waitForPulseDelay: 1000,
+      pulseInterval: 100
+    }
   });
+  const {
+    context: { value: theValue }
+  } = state;
+  console.log(state);
 
   return (
     <div className={styles.container}>

@@ -7,7 +7,10 @@ const App: React.FC = () => {
 
   return (
     <div className="app">
-      <Stepper lowerBound={0} upperBound={100} stepSize={5} value={value} onChange={setValue} />
+      <Stepper lowerBound={0} upperBound={100} stepSize={5} value={value} onChange={v => {
+          setValue(v);
+          console.log(v);
+      }} />
     </div>
   );
 };
