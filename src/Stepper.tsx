@@ -31,7 +31,6 @@ export function Stepper({
   const {
     context: { value: theValue }
   } = state;
-  console.log(state);
 
   return (
     <div className={styles.container}>
